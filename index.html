@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ridr — Vehicle Rental & Fleet Manager</title>
+<link rel="icon" type="image/jpeg" href="logo.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#ffffff;
+    --off:#FAFAFA;
+    --ink:#151312;
+    --grey:#726C68;
+    --line:#E7E3DF;
+    --red:#E0261D;
+    --red-deep:#A81B14;
+    --red-tint:#FCEBEA;
+    --radius:4px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    color:var(--ink);
+    background:var(--white);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    line-height:0.92;
+  }
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 32px;}
+  :focus-visible{outline:3px solid var(--red-deep);outline-offset:2px;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    height:76px;
+  }
+  .logo{
+    font-family:'Inter', sans-serif;
+    font-weight:800;font-size:26px;
+    letter-spacing:-0.02em;
+    text-transform:none;
+    display:flex;align-items:center;gap:8px;
+  }
+  .logo .dot{width:11px;height:11px;background:var(--red);border-radius:50%;display:inline-block;}
+  .navlinks{display:flex;align-items:center;gap:40px;}
+  .navlinks a{
+    font-size:14px;font-weight:600;color:var(--ink);
+    padding:6px 0;border-bottom:2px solid transparent;
+  }
+  .navlinks a:hover{border-bottom-color:var(--red);}
+  .nav-cta{
+    background:var(--ink);color:var(--white);
+    font-size:13px;font-weight:700;
+    padding:11px 20px;border-radius:var(--radius);
+    text-transform:uppercase;letter-spacing:0.04em;
+  }
+  .nav-cta:hover{background:var(--red);}
+  .navlinks-mobile{display:none;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:44px 0 88px;
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:56px;
+    align-items:center;
+  }
+  .eyebrow-row{
+    display:flex;align-items:center;gap:10px;
+    font-size:13px;font-weight:600;color:var(--grey);
+    margin-bottom:22px;
+  }
+  .eyebrow-row .badge-num{
+    background:var(--red-tint);color:var(--red-deep);
+    padding:3px 9px;border-radius:20px;font-weight:700;
+  }
+  h1{
+    font-size:clamp(44px,5.4vw,74px);
+    color:var(--ink);
+  }
+  h1 .red{color:var(--red);}
+  .hero-sub{
+    margin-top:26px;
+    font-size:18px;
+    color:var(--grey);
+    max-width:46ch;
+  }
+  .store-row{
+    display:flex;gap:14px;margin-top:38px;flex-wrap:wrap;
+  }
+  .store-btn{
+    display:flex;align-items:center;gap:11px;
+    background:var(--ink);color:var(--white);
+    padding:11px 20px;border-radius:var(--radius);
+    border:1px solid var(--ink);
+  }
+  .store-btn:hover{background:var(--red);border-color:var(--red);}
+  .store-btn.outline{
+    background:var(--white);color:var(--ink);border:1px solid var(--line);
+  }
+  .store-btn.outline:hover{border-color:var(--red);color:var(--red);}
+  .store-btn .store-text{line-height:1.15;}
+  .store-btn .store-sub{display:block;font-size:9.5px;text-transform:uppercase;letter-spacing:0.06em;opacity:0.75;}
+  .store-btn .store-main{display:block;font-size:14.5px;font-weight:700;}
+
+  /* phone mockup */
+  .phone-stage{position:relative;width:100%;max-width:420px;height:560px;margin:0 auto;}
+  .phone-glow{
+    position:absolute;width:340px;height:340px;background:var(--red-tint);
+    border-radius:50%;filter:blur(10px);top:50%;left:50%;
+    transform:translate(-50%,-50%);z-index:1;opacity:0.7;
+  }
+  .device{
+    position:absolute;top:0;left:50%;
+    background:var(--ink);
+    box-shadow:0 30px 60px -20px rgba(20,15,12,0.4);
+  }
+  .device img{width:100%;display:block;}
+  .device.iphone{
+    width:230px;padding:10px;border-radius:32px;z-index:3;
+    transform:translate(-16%,0);
+  }
+  .device.iphone .device-screen{
+    border-radius:22px;overflow:hidden;background:var(--white);position:relative;
+  }
+  .device.android{
+    width:200px;padding:8px;border-radius:24px;z-index:2;
+    top:64px;
+    transform:translate(-118%,0) rotate(-7deg);
+    opacity:0.98;
+  }
+  .device.android .device-screen{
+    border-radius:17px;overflow:hidden;background:var(--white);position:relative;
+  }
+  .device-tag{
+    position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);
+    font-size:11px;font-weight:700;color:var(--grey);
+    text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;
+  }
+
+  /* ---------- LOGO STRIP ---------- */
+  .strip{border-bottom:1px solid var(--line);padding:26px 0;}
+  .strip .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:14px;
+    font-size:12.5px;font-weight:600;color:var(--grey);
+    letter-spacing:0.02em;
+  }
+
+  /* ---------- FEATURES ---------- */
+  .features{padding:100px 0 90px;}
+  .section-head{
+    display:grid;grid-template-columns:1fr 1fr;gap:40px;
+    align-items:end;margin-bottom:56px;
+  }
+  .section-head h2{font-size:clamp(34px,4vw,50px);}
+  .section-head p{color:var(--grey);font-size:16px;max-width:38ch;}
+  .feat-list{border-top:1px solid var(--line);}
+  .feat-row{
+    display:grid;grid-template-columns:64px 1fr 1.3fr;gap:28px;
+    padding:32px 0;border-bottom:1px solid var(--line);
+    align-items:center;
+  }
+  .feat-icon{
+    width:48px;height:48px;border-radius:12px;
+    background:var(--red-tint);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .feat-icon svg{width:22px;height:22px;stroke:var(--red-deep);}
+  .feat-row h3{
+    font-size:21px;font-weight:700;text-transform:none;
+    font-family:'Inter';letter-spacing:0;line-height:1.25;
+  }
+  .feat-row p{color:var(--grey);font-size:15px;max-width:52ch;}
+
+  /* ---------- GALLERY ---------- */
+  .gallery{padding:0 0 100px;}
+  .gallery-row{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+  }
+  .gallery-item{
+    background:var(--ink);border-radius:20px;padding:8px;
+  }
+  .gallery-item img{
+    width:100%;display:block;border-radius:13px;
+  }
+  .gallery-item figcaption{
+    text-align:center;color:var(--grey);font-size:13px;font-weight:600;
+    margin-top:14px;
+  }
+
+  /* ---------- WHY ---------- */
+  .why{background:var(--off);padding:100px 0;}
+  .why .wrap{display:grid;grid-template-columns:0.85fr 1.15fr;gap:64px;align-items:center;}
+  .why-visual{
+    background:var(--ink);border-radius:18px;padding:40px 34px;color:var(--white);
+    position:relative;overflow:hidden;
+  }
+  .why-visual::before{
+    content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;
+    background:var(--red);border-radius:50%;opacity:0.25;filter:blur(2px);
+  }
+  .why-visual .wv-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.14);
+    font-size:14px;position:relative;z-index:2;
+  }
+  .why-visual .wv-row:last-child{border-bottom:none;}
+  .wv-name{font-weight:600;}
+  .wv-meta{color:rgba(255,255,255,0.55);font-size:12px;margin-top:2px;}
+  .wv-status{
+    font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;
+    padding:4px 10px;border-radius:20px;
+  }
+  .wv-status.done{background:rgba(52,199,89,0.18);color:#4ADE80;}
+  .wv-status.active{background:rgba(224,38,29,0.22);color:#FF8A82;}
+  .why-copy h2{font-size:clamp(32px,3.8vw,46px);margin-bottom:22px;}
+  .why-copy p{color:var(--grey);font-size:16.5px;max-width:52ch;margin-bottom:16px;}
+  .why-copy p strong{color:var(--ink);}
+
+  /* ---------- CTA BAND ---------- */
+  .cta-band{
+    background:var(--red);color:var(--white);
+    padding:96px 0;text-align:center;
+  }
+  .cta-band h2{
+    font-size:clamp(38px,5.5vw,64px);color:var(--white);
+  }
+  .cta-band p{
+    color:rgba(255,255,255,0.85);font-size:17px;
+    max-width:44ch;margin:20px auto 36px;
+  }
+  .cta-band .store-row{justify-content:center;}
+  .cta-band .store-btn{background:var(--white);color:var(--ink);border-color:var(--white);}
+  .cta-band .store-btn:hover{background:var(--ink);color:var(--white);border-color:var(--ink);}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:48px 0;}
+  footer .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:18px;
+  }
+  .foot-links{display:flex;gap:28px;font-size:13.5px;color:var(--grey);font-weight:500;}
+  .foot-links a:hover{color:var(--red);}
+  .foot-copy{font-size:13px;color:var(--grey);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .navlinks{display:none;}
+    .hero .wrap{grid-template-columns:1fr;}
+    .phone-stage{margin-top:20px;}
+    .section-head{grid-template-columns:1fr;gap:16px;}
+    .feat-row{grid-template-columns:48px 1fr;}
+    .feat-row p{grid-column:2 / 3;}
+    .why .wrap{grid-template-columns:1fr;}
+    .gallery-row{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:520px){
+    .wrap{padding:0 20px;}
+    .hero{padding:56px 0 60px;}
+    .store-row{flex-direction:column;align-items:stretch;}
+    .gallery-row{grid-template-columns:1fr 1fr;gap:14px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="logo"><span class="dot"></span>Ridr</div>
+    <div class="navlinks">
+      <a href="#features">Features</a>
+      <a href="#why">Why Ridr</a>
+      <a href="#download">Download</a>
+    </div>
+    <a href="#download" class="nav-cta">Get the app</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow-row"><span class="badge-num">New</span> Built for vehicle rental & fleet businesses</div>
+      <h1>Track your fleet.<br>Not your <span class="red">spreadsheets.</span></h1>
+      <p class="hero-sub">Ridr is the all-in-one manager for vehicle rental businesses — bikes, cars, autos, buses, and trucks — with bookings, live availability, and staff details, all in one clean dashboard you can run from your phone.</p>
+      <div class="store-row">
+        <a href="#" class="store-btn" aria-label="Download on the App Store">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16.5 12.5c0-2.2 1.8-3.3 1.9-3.4-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.4 0-2.8.8-3.5 2.1-1.5 2.6-.4 6.5 1.1 8.6.7 1 1.6 2.2 2.8 2.1 1.1 0 1.5-.7 2.9-.7s1.7.7 2.9.7c1.2 0 2-1 2.7-2 .9-1.2 1.2-2.4 1.2-2.5-.1 0-2.7-1-2.7-4z"/><path d="M13.8 5.6c.6-.7 1-1.7.9-2.6-.9 0-1.9.6-2.5 1.3-.5.6-1 1.6-.9 2.5.9.1 1.9-.5 2.5-1.2z"/></svg>
+          <span class="store-text"><span class="store-sub">Download on the</span><span class="store-main">App Store</span></span>
+        </a>
+        <a href="#" class="store-btn outline" aria-label="Get it on Google Play">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 3.5l14 8.5-14 8.5v-17z"/></svg>
+          <span class="store-text"><span class="store-sub">Get it on</span><span class="store-main">Google Play</span></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="phone-stage">
+      <div class="phone-glow"></div>
+      <div class="device android">
+        <div class="device-screen"><img src="all%20bikes.jpeg" alt="Ridr all bikes list screen"></div>
+        <div class="device-tag">Vehicles</div>
+      </div>
+      <div class="device iphone">
+        <div class="device-screen"><img src="dashboard.jpeg" alt="Ridr dashboard screen"></div>
+        <div class="device-tag">Dashboard</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="wrap">
+    <span>Bike & scooter fleets</span>
+    <span>Cars & autos</span>
+    <span>Buses & trucks</span>
+    <span>Solo managers</span>
+    <span>Multi-location yards</span>
+  </div>
+</div>
+
+<section class="features" id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Everything a rental desk needs</h2>
+      <p>Every vehicle type in one place — no modules to configure and no clutter to dig through.</p>
+    </div>
+
+    <div class="feat-list">
+      <div class="feat-row">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9.5h16M8 5v-1M16 5v-1"/><path d="M8 13h2M8 16h2M14 13h2M14 16h2"/></svg></div>
+        <h3>Manage bookings</h3>
+        <p>View, create, and update rental bookings in real time, so you never lose track of who has booked what, and when.</p>
+      </div>
+      <div class="feat-row">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></div>
+        <h3>Track availability, across every vehicle type</h3>
+        <p>Bikes, cars, autos, buses, trucks, and more — see what's available, rented, or under maintenance, all at a glance.</p>
+      </div>
+      <div class="feat-row">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 19c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/></svg></div>
+        <h3>View renter details</h3>
+        <p>Keep customer names and booking history tied to every rental, so repeat renters and disputes are easy to resolve.</p>
+      </div>
+      <div class="feat-row">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="7.5" r="2.7"/><path d="M3 19c0-2.9 2.5-5 5.5-5s5.5 2.1 5.5 5"/><circle cx="17" cy="8.5" r="2.2"/><path d="M14.5 19c.3-2.3 1.8-4 3.7-4.4"/></svg></div>
+        <h3>Manage staff & brokers</h3>
+        <p>Keep every staff member and broker on record — contact details, join date, and pay rate — and reach them in a tap.</p>
+      </div>
+      <div class="feat-row">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 20h8M12 17v3"/></svg></div>
+        <h3>A dashboard that stays out of your way</h3>
+        <p>A minimal, easy-to-navigate interface built for busy managers who need information fast — no clutter, no complexity.</p>
+      </div>
+      <div class="feat-row">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3L5 13h5l-1 8 8-11h-5l1-7z"/></svg></div>
+        <h3>Fast and lightweight</h3>
+        <p>Built to run smoothly, so you can manage your rental business on the go without delays.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>See Ridr in action</h2>
+      <p>Real screens from the app — your fleet, your bookings, your team, at a glance.</p>
+    </div>
+    <div class="gallery-row">
+      <figure class="gallery-item">
+        <img src="dashboard.jpeg" alt="Ridr dashboard showing fleet overview">
+        <figcaption>Dashboard</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="all%20bikes.jpeg" alt="Ridr all bikes list with registration and insurance details">
+        <figcaption>Vehicles</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="staffs.jpeg" alt="Ridr staff list with pay rate and contact">
+        <figcaption>Staff</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="manager%20portal.jpeg" alt="Ridr business profile and settings">
+        <figcaption>Profile</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="why" id="why">
+  <div class="wrap">
+    <div class="why-visual">
+      <div class="wv-row">
+        <div><div class="wv-name">Amit Singh</div><div class="wv-meta">MP98F8876 · 15 Sep</div></div>
+        <div class="wv-status done">Done</div>
+      </div>
+      <div class="wv-row">
+        <div><div class="wv-name">Aviral Singh</div><div class="wv-meta">WBHG8790 · 2 Sep</div></div>
+        <div class="wv-status active">Active</div>
+      </div>
+      <div class="wv-row">
+        <div><div class="wv-name">Rohan Verma</div><div class="wv-meta">GJ0ER4561 · 2 Sep</div></div>
+        <div class="wv-status active">Active</div>
+      </div>
+      <div class="wv-row">
+        <div><div class="wv-name">Sneha Kumari</div><div class="wv-meta">MP98F8876 · 14 Sep</div></div>
+        <div class="wv-status done">Done</div>
+      </div>
+    </div>
+    <div class="why-copy">
+      <h2>Why Ridr</h2>
+      <p>Running a rental business means juggling bookings, a mixed fleet of vehicles, staff and brokers, and customer details — often all at once.</p>
+      <p><strong>Ridr brings it all together in one clean app</strong>, so you spend less time managing spreadsheets and more time growing your business.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band" id="download">
+  <div class="wrap">
+    <h2>Take control of your fleet</h2>
+    <p>Download Ridr today and run your rental operation — every vehicle, every booking, every staff member — from your phone, wherever you are.</p>
+    <div class="store-row">
+      <a href="#" class="store-btn" aria-label="Download on the App Store">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16.5 12.5c0-2.2 1.8-3.3 1.9-3.4-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.8-.8-1.4 0-2.8.8-3.5 2.1-1.5 2.6-.4 6.5 1.1 8.6.7 1 1.6 2.2 2.8 2.1 1.1 0 1.5-.7 2.9-.7s1.7.7 2.9.7c1.2 0 2-1 2.7-2 .9-1.2 1.2-2.4 1.2-2.5-.1 0-2.7-1-2.7-4z"/><path d="M13.8 5.6c.6-.7 1-1.7.9-2.6-.9 0-1.9.6-2.5 1.3-.5.6-1 1.6-.9 2.5.9.1 1.9-.5 2.5-1.2z"/></svg>
+        <span class="store-text"><span class="store-sub">Download on the</span><span class="store-main">App Store</span></span>
+      </a>
+      <a href="#" class="store-btn" aria-label="Get it on Google Play">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 3.5l14 8.5-14 8.5v-17z"/></svg>
+        <span class="store-text"><span class="store-sub">Get it on</span><span class="store-main">Google Play</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="logo"><span class="dot"></span>Ridr</div>
+    <div class="foot-links">
+      <a href="#features">Features</a>
+      <a href="#why">Why Ridr</a>
+      <a href="#download">Download</a>
+    </div>
+    <div class="foot-copy">© 2026 Ridr. All rights reserved.</div>
+  </div>
+</footer>
+
+</body>
+</html>
