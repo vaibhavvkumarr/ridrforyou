@@ -31,6 +31,7 @@
     --btn-primary-text:var(--white);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
+  [hidden]{display:none !important;}
   html{scroll-behavior:smooth;}
   body{
     font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
@@ -94,12 +95,7 @@
   }
   .signin-btn:hover{border-color:var(--red);color:var(--red);}
   .signin-btn svg{width:16px;height:16px;flex-shrink:0;}
-  .user-chip{
-    display:flex;align-items:center;gap:9px;
-    background:none;border:none;padding:4px 6px 4px 4px;border-radius:20px;
-    font-family:'Inter';cursor:pointer;
-  }
-  .user-chip:hover{background:var(--surface);}
+  .user-chip{display:flex;align-items:center;gap:9px;}
   .user-avatar{
     width:30px;height:30px;border-radius:50%;object-fit:cover;
     border:1px solid var(--border);background:var(--surface);
@@ -108,6 +104,15 @@
     font-size:13px;font-weight:600;max-width:110px;color:var(--text);
     overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
   }
+  .logout-btn{
+    background:none;color:var(--text-muted);
+    border:1px solid var(--border);
+    padding:7px 14px;border-radius:var(--radius);
+    font-family:'Inter';font-size:12px;font-weight:700;
+    text-transform:uppercase;letter-spacing:0.03em;
+    cursor:pointer;
+  }
+  .logout-btn:hover{border-color:var(--red);color:var(--red);}
   .auth-error{
     position:absolute;top:48px;right:0;
     background:var(--ink);color:var(--white);
@@ -138,6 +143,10 @@
     background:var(--red-tint);color:var(--red-deep);
     padding:3px 9px;border-radius:20px;font-weight:700;
   }
+  .hero-greeting{
+    font-size:18px;font-weight:700;color:var(--red);
+    margin-bottom:10px;
+  }
   h1{
     font-size:clamp(44px,5.4vw,74px);
     color:var(--text);
@@ -150,7 +159,7 @@
     max-width:46ch;
   }
   .store-row{
-    display:flex;gap:14px;margin-top:38px;flex-wrap:wrap;
+    display:flex;gap:14px;margin-top:38px;flex-wrap:wrap;align-items:center;
   }
   .store-btn{
     display:flex;align-items:center;gap:11px;
@@ -166,6 +175,17 @@
   .store-btn .store-text{line-height:1.15;}
   .store-btn .store-sub{display:block;font-size:9.5px;text-transform:uppercase;letter-spacing:0.06em;opacity:0.75;}
   .store-btn .store-main{display:block;font-size:14.5px;font-weight:700;}
+  .qr-box{display:flex;flex-direction:column;align-items:center;gap:8px;}
+  .qr-card{
+    width:64px;height:64px;padding:6px;
+    background:var(--white);border-radius:8px;
+    border:1px solid var(--border);
+    box-shadow:0 4px 12px rgba(20,15,12,0.06);
+  }
+  .qr-card img{width:100%;height:100%;display:block;}
+  .qr-label{font-size:10.5px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;}
+  .cta-band .qr-card{border-color:transparent;box-shadow:none;}
+  .cta-band .qr-label{color:rgba(255,255,255,0.85);}
 
   /* phone mockup */
   .phone-stage{position:relative;width:100%;max-width:420px;height:560px;margin:0 auto;}
@@ -367,10 +387,11 @@
           <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M23.52 12.27c0-.85-.08-1.67-.22-2.45H12v4.64h6.47c-.28 1.5-1.13 2.78-2.4 3.63v3.02h3.89c2.28-2.1 3.59-5.19 3.59-8.84z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.07 7.93-2.9l-3.89-3.02c-1.08.72-2.46 1.15-4.04 1.15-3.11 0-5.75-2.1-6.69-4.92H1.29v3.09C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.31 14.31c-.24-.72-.38-1.49-.38-2.28s.14-1.56.38-2.28V6.66H1.29A11.96 11.96 0 000 12.03c0 1.94.46 3.77 1.29 5.37l4.02-3.09z"/><path fill="#EA4335" d="M12 4.77c1.76 0 3.35.6 4.6 1.79l3.45-3.45C17.94 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.66l4.02 3.09c.94-2.82 3.58-4.98 6.69-4.98z"/></svg>
           Sign in
         </button>
-        <button id="user-chip" class="user-chip" type="button" title="Sign out" hidden>
+        <div id="user-chip" class="user-chip" hidden>
           <img id="user-avatar" class="user-avatar" alt="">
           <span id="user-name" class="user-name"></span>
-        </button>
+          <button id="logout-btn" class="logout-btn" type="button">Log out</button>
+        </div>
         <div id="auth-error" class="auth-error" hidden></div>
       </div>
     </div>
@@ -381,6 +402,7 @@
   <div class="wrap">
     <div>
       <div class="eyebrow-row"><span class="badge-num">New</span> Built for vehicle rental & fleet businesses</div>
+      <p class="hero-greeting" id="hero-greeting" hidden>Hi, <span id="hero-username"></span></p>
       <h1>Track your fleet.<br>Not your <span class="red">spreadsheets.</span></h1>
       <p class="hero-sub">Ridr is the all-in-one manager for vehicle rental businesses — bikes, cars, autos, buses, and trucks — with bookings, live availability, and staff details, all in one clean dashboard you can run from your phone.</p>
       <div class="store-row">
@@ -392,6 +414,10 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 3.5l14 8.5-14 8.5v-17z"/></svg>
           <span class="store-text"><span class="store-sub">Get it on</span><span class="store-main">Google Play</span></span>
         </a>
+        <div class="qr-box">
+          <div class="qr-card"><img src="qr.png" alt="QR code to download Ridr"></div>
+          <span class="qr-label">Scan to download</span>
+        </div>
       </div>
     </div>
 
@@ -529,6 +555,10 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 3.5l14 8.5-14 8.5v-17z"/></svg>
         <span class="store-text"><span class="store-sub">Get it on</span><span class="store-main">Google Play</span></span>
       </a>
+      <div class="qr-box">
+        <div class="qr-card"><img src="qr.png" alt="QR code to download Ridr"></div>
+        <span class="qr-label">Scan to download</span>
+      </div>
     </div>
 
     <div class="text-link">
@@ -604,7 +634,10 @@
   const userChip = document.getElementById('user-chip');
   const userAvatar = document.getElementById('user-avatar');
   const userName = document.getElementById('user-name');
+  const logoutBtn = document.getElementById('logout-btn');
   const authError = document.getElementById('auth-error');
+  const heroGreeting = document.getElementById('hero-greeting');
+  const heroUsername = document.getElementById('hero-username');
 
   signinBtn.addEventListener('click', () => {
     authError.hidden = true;
@@ -615,7 +648,7 @@
     });
   });
 
-  userChip.addEventListener('click', () => {
+  logoutBtn.addEventListener('click', () => {
     signOut(auth);
   });
 
@@ -625,9 +658,14 @@
       userChip.hidden = false;
       userAvatar.src = user.photoURL || '';
       userName.textContent = user.displayName || user.email || 'Account';
+
+      const firstName = (user.displayName || user.email || 'there').split(/[\s@]/)[0];
+      heroUsername.textContent = firstName;
+      heroGreeting.hidden = false;
     } else {
       signinBtn.hidden = false;
       userChip.hidden = true;
+      heroGreeting.hidden = true;
     }
   });
 </script>
