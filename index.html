@@ -106,7 +106,6 @@
   .hero h1.hero-anim{animation-delay:1.05s;}
   .hero .hero-sub.hero-anim{animation-delay:1.2s;}
   .hero .store-row.hero-anim{animation-delay:1.35s;}
-  .hero .watch-demo.hero-anim{animation-delay:1.45s;}
   .hero .phone-stage.hero-anim{animation-delay:1.1s;}
 
   /* ---------- SCROLL REVEAL ---------- */
@@ -265,8 +264,8 @@
   .store-btn .store-main{display:block;font-size:14.5px;font-weight:700;}
   .qr-box{display:flex;flex-direction:column;align-items:center;gap:8px;}
   .qr-card{
-    width:64px;height:64px;padding:6px;
-    background:var(--white);border-radius:8px;
+    width:84px;height:84px;padding:7px;
+    background:var(--white);border-radius:10px;
     border:1px solid var(--border);
     box-shadow:0 4px 12px rgba(20,15,12,0.06);
     transition:transform .25s ease;
@@ -276,21 +275,6 @@
   .qr-label{font-size:10.5px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;}
   .cta-band .qr-card{border-color:transparent;box-shadow:none;}
   .cta-band .qr-label{color:rgba(255,255,255,0.85);}
-  .watch-demo{
-    display:inline-flex;align-items:center;gap:10px;
-    margin-top:24px;
-    font-size:14px;font-weight:700;color:var(--text);
-  }
-  .watch-demo-icon{
-    width:36px;height:36px;border-radius:50%;
-    background:var(--surface);border:1px solid var(--border);
-    display:flex;align-items:center;justify-content:center;
-    transition:background-color .2s ease, border-color .2s ease, transform .2s ease;
-  }
-  .watch-demo-icon svg{width:13px;height:13px;fill:var(--text);margin-left:2px;transition:fill .2s ease;}
-  .watch-demo:hover .watch-demo-icon{background:var(--red-tint);border-color:var(--red);transform:scale(1.08);}
-  .watch-demo:hover .watch-demo-icon svg{fill:var(--red);}
-  .watch-demo:hover{color:var(--red);}
 
   /* phone mockup */
   .phone-stage{position:relative;width:100%;max-width:420px;height:560px;margin:0 auto;}
@@ -553,10 +537,6 @@
           <span class="qr-label">Scan to download</span>
         </div>
       </div>
-      <a href="#" class="watch-demo hero-anim" target="_blank" rel="noopener">
-        <span class="watch-demo-icon"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></span>
-        Watch demo
-      </a>
     </div>
 
     <div class="phone-stage hero-anim">
